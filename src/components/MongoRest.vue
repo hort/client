@@ -1,12 +1,22 @@
 <template>
 	<div id="cards">
+		<!--
 		<div class="container-fluid">
-			<b class="text-center">queried {{ entries.length }} elements</b>
+			<p class="font-weight-bold">
+				queried {{ response.length }} elements, showing first {{ entries.length }}
+			</p>
 		</div>
 		<div class="card bg-highlight">
 			<ul class="list-group">
 				<li class="list-group-item bg-highlight" v-for="entry in entries" :key="entry.id">{{ entry.title }}</li>
 			</ul>
+		</div>
+		-->
+		<div class="bg-highlight">
+			<JsonTree class="root"
+				:data="entries"
+				:value="'query results'"
+				:depth="0"></JsonTree>
 		</div>
 	</div>
 </template>
@@ -15,18 +25,22 @@
 import Vue from 'vue';
 import axios from 'axios';
 
+import JsonTree from '@/components/JsonTree.vue'
+
 export default Vue.extend({
 	name: 'MongoRest',
 	data() {
 		return {
-			entries: []
+			entries: {},
+			response: {},
 		}
 	}, methods: {
 		query(collection: string) {
-			console.log('http://localhost:4000/?collection=' + collection + '&query="{}"')
 			axios.get('http://localhost:4000/?collection=' + collection + '&query="{}"')
 				.then((response) => {
 					this.entries = response.data.slice(0, 10);
+					// this.response = response.data;
+					console.log(response.data);
 				}).catch((error) => {
 					console.log(error);
 				});
@@ -36,6 +50,8 @@ export default Vue.extend({
 			for (let collection of ['pearson_subscriptions'])
 				this.query(collection);
 		})
+	}, components: {
+		JsonTree
 	}
 });
 </script>
@@ -43,6 +59,10 @@ export default Vue.extend({
 <style scoped>
 * {
 	border-radius: 0 !important;
+}
+
+.root {
+	padding: 10px;
 }
 
 .bg-highlight {

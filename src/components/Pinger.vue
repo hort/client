@@ -57,7 +57,7 @@ export default Vue.extend({
 					ip: '127.0.0.1:4001',
 					component: '',
 					status: false,
-					check: (service) => {
+					check: (service: Object) => {
 						axios.get('http://localhost:4001/status')
 							.then((response) => {
 								service.status = true;
@@ -71,7 +71,7 @@ export default Vue.extend({
 					ip: '127.0.0.1:4000',
 					component: 'MongoRest',
 					status: false,
-					check: (service) => {
+					check: (service: Object) => {
 						axios.get('http://localhost:4000/status')
 							.then((response) => {
 								service.status = true;
@@ -80,6 +80,48 @@ export default Vue.extend({
 							});
 					}
 				},
+				{
+					name: 'Grafana',
+					ip: '127.0.0.1:3000',
+					component: '',
+					status: false,
+					check: (service: Object) => {
+						axios.get('http://localhost:3000/api/health')
+							.then((response) => {
+								service.status = true;
+							}).catch((error) => {
+								service.status = false;
+							});
+					}
+				},
+				{
+					name: 'Loki',
+					ip: '127.0.0.1:3100',
+					component: '',
+					status: false,
+					check: (service: Object) => {
+						axios.get('http://localhost:3100/ready')
+							.then((response) => {
+								service.status = true;
+							}).catch((error) => {
+								service.status = false;
+							});
+					}
+				},
+				{
+					name: 'Prometheus',
+					ip: '127.0.0.1:9090',
+					component: '',
+					status: false,
+					check: (service: Object) => {
+						axios.get('http://localhost:9090/ready')
+							.then((response) => {
+								service.status = true;
+							}).catch((error) => {
+								service.status = false;
+							});
+					}
+				}
 			]
 		}
 	}, mounted: function() {
