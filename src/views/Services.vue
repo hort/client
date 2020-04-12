@@ -1,14 +1,14 @@
 <template>
-	<Pinger></Pinger>
+  <Checker></Checker>
 </template>
 
 <script>
-import Pinger from '@/components/Pinger.vue'
+import Checker from "@/components/Checker.vue";
 
 export default {
-	name: 'Dashboard',
-	components: {
-		Pinger
-	}
-}
+  name: "Dashboard",
+  components: {
+    Checker
+  }
+};
 </script>
