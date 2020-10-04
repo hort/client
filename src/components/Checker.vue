@@ -25,10 +25,10 @@
                 <svg v-if="service.status" class="bi bi-pause-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5.5 3.5A1.5 1.5 0 017 5v6a1.5 1.5 0 01-3 0V5a1.5 1.5 0 011.5-1.5zm5 0A1.5 1.5 0 0112 5v6a1.5 1.5 0 01-3 0V5a1.5 1.5 0 011.5-1.5z"/>
                 </svg>
-            </button>
+              </button>
             </div>
             <div class="col-sm">
-              <button class="btn float-right">
+              <button class="btn float-right" type="button" data-toggle="modal" v-bind:data-target="'#' + service.id">
                 <svg class="bi bi-gear-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 01-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 01.872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 012.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 012.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 01.872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 01-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 01-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 100-5.86 2.929 2.929 0 000 5.858z" clip-rule="evenodd"/>
               </svg>
@@ -40,6 +40,10 @@
       <div class="card-body">
         <component v-bind:is="service.component"></component>
       </div>
+      <Modal
+        :uniq="service.id">
+        <h3 slot="header">custom header</h3>
+      </Modal>
     </div>
   </div>
 </template>
@@ -48,13 +52,14 @@
 import Vue   from 'vue';
 import axios from 'axios';
 
-import MongoRest from '@/components/MongoRest.vue'
+import Backend from '@/components/Backend.vue'
+import Modal     from '@/components/Modal.vue'
 
 export default Vue.extend({
   name: 'Checker',
   data() {
     return {
-      services: []
+      services: [],
     }
   }, mounted: function() {
     this.$nextTick(function () {
@@ -65,8 +70,8 @@ export default Vue.extend({
     load_services: function() {
       axios.get("http://localhost:4000/services")
       .then(response => {
-        console.log(response.data);
         this.services = response.data;
+        this.services.map(service => service.id = 'id' + service.ip.match(/:(\d+)/)[1])
         for (let service of this.services) {
           axios.get("http://" + service.ip + service.check)
           .then(response => {
@@ -83,7 +88,8 @@ export default Vue.extend({
     }
   },
   components: {
-    MongoRest
+    Backend,
+    Modal
   }
 });
 </script>
@@ -117,5 +123,6 @@ export default Vue.extend({
 
 .card {
   margin: 15px;
+  box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1)
 }
 </style>

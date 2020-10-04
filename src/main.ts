@@ -5,6 +5,9 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+import infiniteScroll from 'vue-infinite-scroll'
+Vue.use(infiniteScroll)
+
 new Vue({
 	router,
 	store,

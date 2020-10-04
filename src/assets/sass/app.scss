@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+.navbar-custom {
+  background-color: #23282c;
+}
+
+body {
+  font-family: monospace, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+$body-bg: #000;
+
+$sizes: ();
+@import "/home/mirco/code/hort/client/node_modules/bootstrap/scss/bootstrap.scss";

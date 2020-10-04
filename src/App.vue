@@ -1,11 +1,22 @@
 <template>
-	<router-view/>
+  <div>
+    <nav class="navbar navbar-expand-sm navbar-dark navbar-custom">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">hort</a>
+      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/services">Services</a>
+        </li>
+      </ul>
+    </nav>
+    <router-view/>
+  </div>
 </template>
 
 <style>
-body {
-	font-family: monospace, Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
+@import './assets/sass/app.scss';
 </style>
