@@ -14,6 +14,11 @@ const routes = [
 		name: 'Services',
 		component: () => import('../views/Services.vue')
 	},
+	{
+		path: '/interfaces',
+		name: 'interfaces',
+		component: () => import('../views/Interfaces.vue')
+	},
 ]
 
 const router = new VueRouter({

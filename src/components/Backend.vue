@@ -42,7 +42,7 @@ export default Vue.extend({
         rel: "",
         val: "",
       },
-      filters: {},
+      filters: [],
       offset: 0,
       limit: 50,
     };
@@ -62,7 +62,7 @@ export default Vue.extend({
         });
     },
     add_filters() {
-      this.filters[this.filter.key] = parseInt(this.filter.val);
+      //this.filters[this.filter.key] = parseInt(this.filter.val);
       this.query();
     },
   },
